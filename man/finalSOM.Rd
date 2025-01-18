@@ -21,6 +21,6 @@ Re-trains the SOM using a specified optimal grid size and number of iterations.
 }
 \examples{
 \dontrun{
-  MyfinalSOM <- finalSOM(data, dimension = 6, iterations = 700)
+  myFinalSOM <- finalSOM(data, dimension = 6, iterations = 700)
 }
 }
