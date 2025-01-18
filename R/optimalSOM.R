@@ -63,11 +63,11 @@ optimalSOM <- function(data, method = "A", increments, iterations) {
     mutate(QplusT_error = Quantisation_error + Topographic_error,
            QplusTplusK_error = Quantisation_error + Topographic_error + `Kaski-Lagus_error`,
            all_error = Explained_variance - QplusTplusK_error)
-  QTerror_df <- error_df %>% filter(QplusT_error == min(QplusT_error))
-  Kerror_df <- error_df %>% filter(`Kaski-Lagus_error` == min(`Kaski-Lagus_error`))
-  QTKerror_df <- error_df %>% filter(QplusTplusK_error == min(QplusTplusK_error))
-  Verror_df <- error_df %>% filter(Explained_variance == max(Explained_variance))
-  All_errors_df <- error_df %>% filter(all_error == max(all_error))
+  QTerror_df <- error_df %>% filter(QplusT_error == min(QplusT_error, na.rm = TRUE))
+Kerror_df <- error_df %>% filter(`Kaski-Lagus_error` == min(`Kaski-Lagus_error`, na.rm = TRUE))
+QTKerror_df <- error_df %>% filter(QplusTplusK_error == min(QplusTplusK_error, na.rm = TRUE))
+Verror_df <- error_df %>% filter(Explained_variance == max(Explained_variance, na.rm = TRUE))
+All_errors_df <- error_df %>% filter(all_error == max(all_error, na.rm = TRUE))
   My_dim_QT <- as.numeric(QTerror_df$Dimension)
   My_dim_K <- as.numeric(Kerror_df$Dimension)
   My_dim_QTK <- as.numeric(QTKerror_df$Dimension)
