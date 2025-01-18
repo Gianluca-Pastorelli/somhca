@@ -64,18 +64,18 @@ optimalSOM <- function(data, method = "A", increments, iterations) {
            QplusTplusK_error = Quantisation_error + Topographic_error + `Kaski-Lagus_error`,
            all_error = Explained_variance - QplusTplusK_error)
   QTerror_df <- error_df %>% filter(QplusT_error == min(QplusT_error, na.rm = TRUE))
-Kerror_df <- error_df %>% filter(`Kaski-Lagus_error` == min(`Kaski-Lagus_error`, na.rm = TRUE))
-QTKerror_df <- error_df %>% filter(QplusTplusK_error == min(QplusTplusK_error, na.rm = TRUE))
-Verror_df <- error_df %>% filter(Explained_variance == max(Explained_variance, na.rm = TRUE))
-All_errors_df <- error_df %>% filter(all_error == max(all_error, na.rm = TRUE))
+  Kerror_df <- error_df %>% filter(`Kaski-Lagus_error` == min(`Kaski-Lagus_error`, na.rm = TRUE))
+  QTKerror_df <- error_df %>% filter(QplusTplusK_error == min(QplusTplusK_error, na.rm = TRUE))
+  Verror_df <- error_df %>% filter(Explained_variance == max(Explained_variance, na.rm = TRUE))
+  All_errors_df <- error_df %>% filter(all_error == max(all_error, na.rm = TRUE))
   My_dim_QT <- as.numeric(QTerror_df$Dimension)
   My_dim_K <- as.numeric(Kerror_df$Dimension)
   My_dim_QTK <- as.numeric(QTKerror_df$Dimension)
   My_dim_V <- as.numeric(Verror_df$Dimension)
   My_dim_all <- as.numeric(All_errors_df$Dimension)
-  return(data.frame("[Quality measure]"=c("Min nQe+nTe","Min nKLe","Min nQe+nTe+nKLe","Max n%ev", "Max QI"),
-                    "[Value]"=c(QTerror_df$QplusT_error, Kerror_df$`Kaski-Lagus_error`, QTKerror_df$QplusTplusK_error,
+  return(data.frame("Quality measure"=c("Min nQe+nTe","Min nKLe","Min nQe+nTe+nKLe","Max n%ev", "Max QI"),
+                    "Value"=c(QTerror_df$QplusT_error, Kerror_df$`Kaski-Lagus_error`, QTKerror_df$QplusTplusK_error,
                                 Verror_df$Explained_variance, All_errors_df$all_error),
-                    "[Associated grid dimension]"=c(My_dim_QT, My_dim_K, My_dim_QTK, My_dim_V, My_dim_all),
+                    "Associated grid dimension"=c(My_dim_QT, My_dim_K, My_dim_QTK, My_dim_V, My_dim_all),
                     check.names = FALSE))
 }

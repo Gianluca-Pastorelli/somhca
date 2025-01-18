@@ -11,7 +11,7 @@
 #' @return A trained SOM model object.
 #' @examples
 #' \dontrun{
-#'   MyfinalSOM <- finalSOM(data, dimension = 6, iterations = 700)
+#'   myFinalSOM <- finalSOM(data, dimension = 6, iterations = 700)
 #' }
 #' @export
 
