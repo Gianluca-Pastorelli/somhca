@@ -11,10 +11,10 @@ clusterSOM(model, plot_result = TRUE, file_path = NULL)
 
 \item{plot_result}{A logical value indicating whether to plot the clustering result. Default is `TRUE`.}
 
-\item{file_path}{An optional string specifying the path to a CSV file. If provided, clusters are assigned to the observations in the original dataset, and the updated data with an added "Cluster" column is stored globally as 'Data&Clusters'.}
+\item{file_path}{An optional string specifying the path to a CSV file. If provided, clusters are assigned to the observations in the original dataset, and the updated data is stored in a package environment as 'DataAndClusters'.}
 }
 \value{
-A plot of the clusters on the SOM grid (if `plot_result = TRUE`). Additionally, if `file_path` is specified, a modified dataset with cluster assignments is stored in the global environment.
+A plot of the clusters on the SOM grid (if `plot_result = TRUE`). If `file_path` is specified, the clustered dataset is stored in a package environment for retrieval.
 }
 \description{
 Groups similar nodes of the SOM using hierarchical clustering and the KGS
@@ -24,5 +24,6 @@ penalty function to determine the optimal number of clusters.
 \dontrun{
   clusterSOM(model, plot_result = TRUE)
   clusterSOM(model, plot_result = FALSE, file_path = "data.csv")
+  getClusterData()
 }
 }
