@@ -5,6 +5,9 @@
 #' Creates various types of plots to visualize and evaluate the trained SOM model.
 #'
 #' @import RColorBrewer aweSOM dplyr kohonen maptree
+#' @importFrom grDevices colorRampPalette
+#' @importFrom stats cutree dist hclust na.omit
+#' @importFrom utils read.csv setTxtProgressBar txtProgressBar
 #' @param model The trained SOM model object.
 #' @param plot_type An integer specifying the type of plot to generate. Options are:
 #'   \describe{

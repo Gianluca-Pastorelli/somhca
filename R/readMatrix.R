@@ -9,6 +9,9 @@
 #' headers and, in case, row headers) only contain numeric values.
 #'
 #' @import RColorBrewer aweSOM dplyr kohonen maptree
+#' @importFrom grDevices colorRampPalette
+#' @importFrom stats cutree dist hclust na.omit
+#' @importFrom utils read.csv setTxtProgressBar txtProgressBar
 #' @param file_path A string specifying the path to the CSV file.
 #' @param remove_row_headings A logical value. If `TRUE`, removes the first column of the dataset. This is useful when the first column contains non-numeric identifiers (e.g., sample names) that should be excluded from the analysis. Default is `FALSE`.
 #' @param scaling A string specifying the scaling method. Options are:

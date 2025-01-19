@@ -1,43 +1,50 @@
-## Define the function clusterSOM() to perform clustering on the SOM nodes.
-
 #' Perform Clustering on SOM Nodes
 #'
 #' Groups similar nodes of the SOM using hierarchical clustering and the KGS
 #' penalty function to determine the optimal number of clusters.
 #'
 #' @import RColorBrewer aweSOM dplyr kohonen maptree
+#' @importFrom grDevices colorRampPalette
+#' @importFrom stats cutree dist hclust na.omit
+#' @importFrom utils read.csv setTxtProgressBar txtProgressBar
 #' @param model The trained SOM model object.
 #' @param plot_result A logical value indicating whether to plot the clustering result. Default is `TRUE`.
-#' @param file_path An optional string specifying the path to a CSV file. If provided, clusters are assigned to the observations in the original dataset, and the updated data with an added "Cluster" column is stored globally as 'Data&Clusters'.
-#' @return A plot of the clusters on the SOM grid (if `plot_result = TRUE`). Additionally, if `file_path` is specified, a modified dataset with cluster assignments is stored in the global environment.
+#' @param file_path An optional string specifying the path to a CSV file. If provided, clusters are assigned to the observations in the original dataset, and the updated data is stored in a package environment as 'DataAndClusters'.
+#' @return A plot of the clusters on the SOM grid (if `plot_result = TRUE`). If `file_path` is specified, the clustered dataset is stored in a package environment for retrieval.
 #' @examples
 #' \dontrun{
 #'   clusterSOM(model, plot_result = TRUE)
 #'   clusterSOM(model, plot_result = FALSE, file_path = "data.csv")
+#'   getClusterData()
 #' }
 #' @export
 
 clusterSOM <- function(model, plot_result = TRUE, file_path = NULL) {
+  # Validate inputs
+  if (!inherits(model, "kohonen")) {
+    stop("The input model must be a trained SOM object (of class 'kohonen').")
+  }
+  if (!is.null(file_path) && !file.exists(file_path)) {
+    stop("The specified file path does not exist or cannot be read.")
+  }
 
   # Set seed for reproducibility
   set.seed(231122)
 
-  # Calculate distance matrix and perform hierarchical clustering
+  # Perform hierarchical clustering
   distance <- dist(getCodes(model))
   clustering <- hclust(distance)
 
   # Determine optimal number of clusters using the KGS penalty function
   optimal_k <- kgs(clustering, distance, maxclust = 20)
   clusters <- as.integer(names(optimal_k[which(optimal_k == min(optimal_k))]))
-
-  # Output the calculated number of clusters
-  cat(clusters, "clusters were determined.", "\n")
+  cat(clusters, "clusters were determined.\n")
 
   # Assign clusters to SOM units
   som_cluster <- cutree(clustering, clusters)
 
-  # Define an unlimited color palette using RColorBrewer
-  max_colors <- max(20, clusters)  # Ensure there are enough colors for the clusters
+  # Create a color palette
+  max_colors <- max(20, clusters)  # Ensure enough colors
   pretty_palette <- colorRampPalette(brewer.pal(8, "Set1"))(max_colors)
 
   # Plot the result if requested
@@ -46,20 +53,32 @@ clusterSOM <- function(model, plot_result = TRUE, file_path = NULL) {
     add.cluster.boundaries(model, som_cluster)
   }
 
-  # If file_path is provided, read the data, assign clusters, and store it globally
+  # If file_path is provided, process and store the data
   if (!is.null(file_path)) {
-    # Get the vector with the cluster value for each original observation
+    # Map clusters to original observations
     cluster_assignment <- som_cluster[model$unit.classif]
-    # Add the assigned clusters as a column to a copy of the original data
+
+    # Read and modify the dataset
     data <- read.csv(file_path)
     data$Cluster <- cluster_assignment
-    data <- data[, c("Cluster", setdiff(names(data), "Cluster"))] # Move 'Cluster' to the first column
+    data <- data[, c("Cluster", setdiff(names(data), "Cluster"))]
 
-    # Store the copy of the original data with the assigned clusters in the global environment
-    assign("Data&Clusters", data, envir = .GlobalEnv)
+    # Store the data in the package environment
+    somhca_env$DataAndClusters <- data
 
-    # Inform the user about the exported file
-    cat("The original data, now with assigned clusters, is stored as 'Data&Clusters'. This dataset can be exported using the following function:\n")
-    cat("write.csv(Data&Clusters, file='C:\\File_path\\...\\New_file_name.csv', row.names=FALSE)\n")
+    # Notify the user
+    cat("The clustered dataset is stored in the package environment as 'DataAndClusters'. Use `getClusterData()` to retrieve it.\n")
   }
+}
+
+#' Retrieve Clustered Data
+#'
+#' Access the dataset with cluster assignments stored by `clusterSOM`.
+#' @return A data frame with the clustered dataset.
+#' @export
+getClusterData <- function() {
+  if (!exists("DataAndClusters", envir = somhca_env)) {
+    stop("No clustered data found. Run `clusterSOM` with a valid `file_path` first.")
+  }
+  return(somhca_env$DataAndClusters)
 }

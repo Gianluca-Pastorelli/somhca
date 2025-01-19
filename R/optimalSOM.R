@@ -6,6 +6,9 @@
 #' measures and heuristic approaches.
 #'
 #' @import RColorBrewer aweSOM dplyr kohonen maptree
+#' @importFrom grDevices colorRampPalette
+#' @importFrom stats cutree dist hclust na.omit
+#' @importFrom utils read.csv setTxtProgressBar txtProgressBar
 #' @param data The preprocessed data matrix containing the input data for SOM training.
 #' @param method A character string indicating the method for estimating the maximum grid dimension. Options are:
 #'   \describe{
