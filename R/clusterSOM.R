@@ -12,11 +12,19 @@
 #' @param file_path An optional string specifying the path to a CSV file. If provided, clusters are assigned to the observations in the original dataset, and the updated data is stored in a package environment as 'DataAndClusters'.
 #' @return A plot of the clusters on the SOM grid (if `plot_result = TRUE`). If `file_path` is specified, the clustered dataset is stored in a package environment for retrieval.
 #' @examples
-#' \dontrun{
-#'   clusterSOM(model, plot_result = TRUE)
-#'   clusterSOM(model, plot_result = FALSE, file_path = "data.csv")
-#'   getClusterData()
-#' }
+#' # Create a toy matrix with 9 columns and 100 rows
+#' data <- matrix(rnorm(900), ncol = 9, nrow = 100)  # 900 random numbers, 100 rows, 9 columns
+#'
+#' # Run the finalSOM function with the mock data
+#' model <- finalSOM(data, dimension = 6, iterations = 700)
+#'
+#' # Perform clustering using the mock model
+#' clusterSOM(model, plot_result = TRUE)
+#'
+#' # Load the toy data from the package's inst/extdata/ directory
+#' file_path <- system.file("extdata", "toy_data.csv", package = "somhca")
+#' clusterSOM(model, plot_result = FALSE, file_path)
+#' getClusterData()
 #' @export
 
 clusterSOM <- function(model, plot_result = TRUE, file_path = NULL) {
@@ -28,9 +36,6 @@ clusterSOM <- function(model, plot_result = TRUE, file_path = NULL) {
     stop("The specified file path does not exist or cannot be read.")
   }
 
-  # Set seed for reproducibility
-  set.seed(231122)
-
   # Perform hierarchical clustering
   distance <- dist(getCodes(model))
   clustering <- hclust(distance)
@@ -38,7 +43,7 @@ clusterSOM <- function(model, plot_result = TRUE, file_path = NULL) {
   # Determine optimal number of clusters using the KGS penalty function
   optimal_k <- kgs(clustering, distance, maxclust = 20)
   clusters <- as.integer(names(optimal_k[which(optimal_k == min(optimal_k))]))
-  cat(clusters, "clusters were determined.\n")
+  message(clusters, "clusters were determined.\n")
 
   # Assign clusters to SOM units
   som_cluster <- cutree(clustering, clusters)
@@ -67,7 +72,7 @@ clusterSOM <- function(model, plot_result = TRUE, file_path = NULL) {
     somhca_env$DataAndClusters <- data
 
     # Notify the user
-    cat("The clustered dataset is stored in the package environment as 'DataAndClusters'. Use `getClusterData()` to retrieve it.\n")
+    message("The clustered dataset is stored in the package environment as 'DataAndClusters'. Use `getClusterData()` to retrieve it.\n")
   }
 }
 

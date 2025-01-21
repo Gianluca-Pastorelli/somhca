@@ -23,12 +23,14 @@
 #'   }
 #' @return A matrix with the processed data.
 #' @examples
-#' \dontrun{
-#'   myMatrix <- readMatrix("data.csv", TRUE, "MinMax")
-#' }
+#' # Load the toy data from the package's inst/extdata/ directory
+#' file_path <- system.file("extdata", "toy_data.csv", package = "somhca")
+#'
+#' # Run the readMatrix function with the mock data
+#' myMatrix <- readMatrix(file_path, TRUE, "MinMax")
 #' @export
 
-readMatrix <- function(file_path, remove_row_headings = F, scaling = "no") {
+readMatrix <- function(file_path, remove_row_headings = FALSE, scaling = "no") {
 
   # Read the data from the file
   data <- read.csv(file_path)

@@ -20,9 +20,11 @@
 #' @param iterations An integer defining the number of iterations for SOM training. A lower value, such as less than 500, helps reduce computation time. If the process takes too long or an error occurs, try reducing the number of iterations for quicker results.
 #' @return A data frame summarizing quality measures and their associated optimal grid dimensions. Use these results to select the most suitable grid size for your SOM.
 #' @examples
-#' \dontrun{
-#'   myOptimalSOM <- optimalSOM(data, method = "A", increments = 2, iterations = 300)
-#' }
+#' # Create a toy matrix with 9 columns and 100 rows
+#' data <- matrix(rnorm(900), ncol = 9, nrow = 100)  # 900 random numbers, 100 rows, 9 columns
+#'
+#' # Run the optimalSOM function with the mock data
+#' myOptimalSOM <- optimalSOM(data, method = "A", increments = 2, iterations = 300)
 #' @export
 
 optimalSOM <- function(data, method = "A", increments, iterations) {
@@ -40,7 +42,6 @@ optimalSOM <- function(data, method = "A", increments, iterations) {
   names(error_df) <-c("Dimension","Quantisation_error","Topographic_error","Kaski-Lagus_error","Explained_variance")
   seq <- seq(2,max_dim,increments)
   progbar <- txtProgressBar(min=0,max=max_dim,style=3)
-  set.seed(281122)
   for (i in seq) {
     My_Grid <- somgrid(xdim = i, ydim = i, topo = "hexagonal", toroidal = T)
     My_Model <- som(X = data,

@@ -13,16 +13,17 @@
 #' @param iterations An integer defining the number of iterations for training the SOM model. Use a large value, e.g., 500 or higher, for improved training (an error message could suggest that reducing the number of iterations might be necessary).
 #' @return A trained SOM model object.
 #' @examples
-#' \dontrun{
-#'   myFinalSOM <- finalSOM(data, dimension = 6, iterations = 700)
-#' }
+#' # Create a toy matrix with 9 columns and 100 rows
+#' data <- matrix(rnorm(900), ncol = 9, nrow = 100)  # 900 random numbers, 100 rows, 9 columns
+#'
+#' # Run the finalSOM function with the mock data
+#' myFinalSOM <- finalSOM(data, dimension = 6, iterations = 700)
 #' @export
 
 finalSOM <- function(data, dimension, iterations) {
   My_dim <- dimension
   My_Grid <- somgrid(xdim = My_dim, ydim = My_dim, topo = "hexagonal", toroidal = T)
   # Create the model
-  set.seed(291122)
   My_Model <- som(X = data,
                   grid = My_Grid,
                   rlen=iterations,
