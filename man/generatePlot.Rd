@@ -27,8 +27,13 @@ A plot or a series of plots is generated and displayed based on the specified ty
 Creates various types of plots to visualize and evaluate the trained SOM model.
 }
 \examples{
-\dontrun{
-  generatePlot(model, plot_type = 2)
-  generatePlot(model, plot_type = 5, data)
-}
+# Create a toy matrix with 9 columns and 100 rows
+data <- matrix(rnorm(900), ncol = 9, nrow = 100)  # 900 random numbers, 100 rows, 9 columns
+
+# Run the finalSOM function with the mock data
+model <- finalSOM(data, dimension = 6, iterations = 700)
+
+# Generate plots using the mock model
+generatePlot(model, plot_type = 2)
+generatePlot(model, plot_type = 5, data)
 }

@@ -21,9 +21,17 @@ Groups similar nodes of the SOM using hierarchical clustering and the KGS
 penalty function to determine the optimal number of clusters.
 }
 \examples{
-\dontrun{
-  clusterSOM(model, plot_result = TRUE)
-  clusterSOM(model, plot_result = FALSE, file_path = "data.csv")
-  getClusterData()
-}
+# Create a toy matrix with 9 columns and 100 rows
+data <- matrix(rnorm(900), ncol = 9, nrow = 100)  # 900 random numbers, 100 rows, 9 columns
+
+# Run the finalSOM function with the mock data
+model <- finalSOM(data, dimension = 6, iterations = 700)
+
+# Perform clustering using the mock model
+clusterSOM(model, plot_result = TRUE)
+
+# Load the toy data from the package's inst/extdata/ directory
+file_path <- system.file("extdata", "toy_data.csv", package = "somhca")
+clusterSOM(model, plot_result = FALSE, file_path)
+getClusterData()
 }

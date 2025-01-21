@@ -20,7 +20,9 @@ A trained SOM model object.
 Re-trains the SOM using a specified optimal grid size and number of iterations.
 }
 \examples{
-\dontrun{
-  myFinalSOM <- finalSOM(data, dimension = 6, iterations = 700)
-}
+# Create a toy matrix with 9 columns and 100 rows
+data <- matrix(rnorm(900), ncol = 9, nrow = 100)  # 900 random numbers, 100 rows, 9 columns
+
+# Run the finalSOM function with the mock data
+myFinalSOM <- finalSOM(data, dimension = 6, iterations = 700)
 }

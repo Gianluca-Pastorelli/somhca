@@ -28,7 +28,9 @@ Computes the optimal grid size for training a SOM using various quality
 measures and heuristic approaches.
 }
 \examples{
-\dontrun{
-  myOptimalSOM <- optimalSOM(data, method = "A", increments = 2, iterations = 300)
-}
+# Create a toy matrix with 9 columns and 100 rows
+data <- matrix(rnorm(900), ncol = 9, nrow = 100)  # 900 random numbers, 100 rows, 9 columns
+
+# Run the optimalSOM function with the mock data
+myOptimalSOM <- optimalSOM(data, method = "A", increments = 2, iterations = 300)
 }

@@ -4,7 +4,7 @@
 \alias{readMatrix}
 \title{Read a CSV File and Convert to a Matrix}
 \usage{
-readMatrix(file_path, remove_row_headings = F, scaling = "no")
+readMatrix(file_path, remove_row_headings = FALSE, scaling = "no")
 }
 \arguments{
 \item{file_path}{A string specifying the path to the CSV file.}
@@ -30,7 +30,9 @@ represent variables (e.g., features), and all cells (except for column
 headers and, in case, row headers) only contain numeric values.
 }
 \examples{
-\dontrun{
-  myMatrix <- readMatrix("data.csv", TRUE, "MinMax")
-}
+# Load the toy data from the package's inst/extdata/ directory
+file_path <- system.file("extdata", "toy_data.csv", package = "somhca")
+
+# Run the readMatrix function with the mock data
+myMatrix <- readMatrix(file_path, TRUE, "MinMax")
 }
