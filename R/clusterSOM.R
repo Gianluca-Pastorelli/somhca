@@ -21,7 +21,8 @@
 #' # Perform clustering using the mock model
 #' clusterSOM(model, plot_result = TRUE)
 #'
-#' # Load the toy data from the package's inst/extdata/ directory
+#' # Load the toy data from the package's inst/extdata/ directory, perform
+#' # clustering and retrieve the clustered dataset
 #' file_path <- system.file("extdata", "toy_data.csv", package = "somhca")
 #' clusterSOM(model, plot_result = FALSE, file_path)
 #' getClusterData()
@@ -43,7 +44,7 @@ clusterSOM <- function(model, plot_result = TRUE, file_path = NULL) {
   # Determine optimal number of clusters using the KGS penalty function
   optimal_k <- kgs(clustering, distance, maxclust = 20)
   clusters <- as.integer(names(optimal_k[which(optimal_k == min(optimal_k))]))
-  message(clusters, "clusters were determined.\n")
+  message(clusters, " clusters were determined.\n")
 
   # Assign clusters to SOM units
   som_cluster <- cutree(clustering, clusters)

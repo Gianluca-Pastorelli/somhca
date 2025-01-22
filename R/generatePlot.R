@@ -23,6 +23,9 @@
 #' # Create a toy matrix with 9 columns and 100 rows
 #' data <- matrix(rnorm(900), ncol = 9, nrow = 100)  # 900 random numbers, 100 rows, 9 columns
 #'
+#' # Assign column names to the data matrix
+#' colnames(data) <- paste("Var", 1:ncol(data), sep = "_")
+#'
 #' # Run the finalSOM function with the mock data
 #' model <- finalSOM(data, dimension = 6, iterations = 700)
 #'
