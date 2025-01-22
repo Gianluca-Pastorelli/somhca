@@ -30,7 +30,8 @@ model <- finalSOM(data, dimension = 6, iterations = 700)
 # Perform clustering using the mock model
 clusterSOM(model, plot_result = TRUE)
 
-# Load the toy data from the package's inst/extdata/ directory
+# Load the toy data from the package's inst/extdata/ directory, perform
+# clustering and retrieve the clustered dataset
 file_path <- system.file("extdata", "toy_data.csv", package = "somhca")
 clusterSOM(model, plot_result = FALSE, file_path)
 getClusterData()
