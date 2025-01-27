@@ -10,13 +10,12 @@ It also performs hierarchical clustering on the SOM nodes to group similar units
 ## Instructions
 ### 1. Load the somhca package
 Make sure to install and load the somhca package before running the analysis:  
-install.packages("devtools")  
-devtools::install_github("Gianluca-Pastorelli/somhca")  
+install.packages("somhca")  
 library(somhca)
 
 ### 2. Read the data
-Provide the path and file name of your dataset in CSV format:  
-readMatrix()
+Read the data from an in-memory data frame or matrix, or provide the path and file name of a dataset in CSV format:  
+loadMatrix()
 
 ### 3. Estimate optimal SOM grid size
 Estimate the optimal SOM grid size based on specified criteria:  
