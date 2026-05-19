@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^somhca\.Rcheck$
+^.*\.DS_Store$
+^Thumbs\.db$
+^LICENSE\.md$
