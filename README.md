@@ -1,5 +1,5 @@
 # somhca R package
-#### Implements self-organising maps (SOM) combined with hierarchical cluster analysis (HCA) for clustering and visualization of high-dimensional data.
+#### Implements self-organising maps (SOM) combined with hierarchical cluster analysis (HCA) for clustering and visualization of high-dimensional data
 The package includes functions to estimate a suitable map size based on various quality measures and to generate a model using the selected dimensions. 
 It also performs hierarchical clustering on the map nodes or other data to group similar units.  
   
